@@ -1,0 +1,209 @@
+13-15
+
+Meal Maker
+
+레스토랑에서 메뉴를 쉽게 파악하기위한,
+3 코스 식사를 랜덤으로 만들기.
+
+//full code answer start
+
+const menu = {
+ _courses: {
+   appetizers: [],
+   mains: [],
+   desserts: [],
+   test: []   
+   },
+ get appetizers() {
+   return this._courses.appetizers;
+ },
+ set appetizers(appetizerIn){
+   this._courses.appetizers = appetizerIn;
+ },
+ get mains() {
+   return this.courses.mains;
+ },
+ set mains(mainsIn){
+   this._courses.mains = mainsIn;
+ },
+ get desserts() {
+   return this.courses.desserts;
+ },
+ set desserts(dessertsIn){
+   this._courses.desserts = dessertsIn;
+ },
+ get courses() {
+   return {
+     appetizers: this.appetizers,
+     mains: this.mains,
+     desserts: this.desserts,
+ 
+   };
+ },
+ addDishToCourse (courseName, dishName, dishPrice){
+   const dish = {
+     name: dishName,
+     price: dishPrice,
+   };
+   return this._courses[courseName].push(dish);
+ },
+ getRandomDishFromCourse(courseName) {
+   const dishes = this._courses[courseName];
+   const randomIndex = Math.floor(Math.random() * dishes.length);
+console.log(randomIndex);
+ 
+   return dishes[randomIndex];
+     
+ },
+ generateRandomMeal() {
+   const appetizer = this.getRandomDishFromCourse('appetizers');
+   const main = this.getRandomDishFromCourse('mains');
+   const dessert = this.getRandomDishFromCourse('desserts');
+   const test = this.getRandomDishFromCourse('test');
+   const totalPrice = appetizer.price + main.price + dessert.price + test.price;
+   return `Your meal is ${appetizer.name}, ${main.name}, and ${dessert.name}, and ${test.name} the total price is ${totalPrice}`;
+ }
+};
+ 
+menu.addDishToCourse('appetizers', 'salad', 4.00);
+menu.addDishToCourse('appetizers', 'wings', 3.00);
+menu.addDishToCourse('appetizers', 'fries', 1.00);
+ 
+menu.addDishToCourse('mains', 'steak', 10.25);
+menu.addDishToCourse('mains', 'salmon', 7.75);
+menu.addDishToCourse('mains', 'tofu', 11.20);
+ 
+menu.addDishToCourse('desserts', 'ice cream', 3.00);
+menu.addDishToCourse('desserts', 'coffee', 3.00);
+menu.addDishToCourse('desserts', 'cake', 3.25);
+ 
+menu.addDishToCourse('test', 'sex', 66.25);
+menu.addDishToCourse('test', 'tex', 500.25);
+menu.addDishToCourse('test', 'rex', 1000.25);
+ 
+const meal = menu.generateRandomMeal();
+console.log(meal);
+console.log(menu.getRandomDishFromCourse('appetizers'))
+ 
+console.log(menu._courses);
+console.log(menu._courses.appetizers);
+console.log(menu._courses.mains);
+console.log(menu._courses.desserts);
+console.log(menu._courses.test);
+ 
+ 
+console.log(menu._courses['appetizers']);
+
+//full code answer end
+
+
+---------------------description for answer
+
+// 
+'appetizers'는 위의 addDishToCourse의 courseName으로 들어간다.
+'salad', 4.00 은 각각 dishName, dishPrice 로 들어간다.
+//
+--
+menu.addDishToCourse('appetizers', 'salad', 4.00);
+--
+
+//
+courseName변수가 _courses의 변수에 적용되어 .push(dish)로 name, price 주입. 
+실제 menu._courses에는 {name:dishName, price,:dishPrice}가 한 뭉탱이로 들어감.
+이것이 밑에서 3개의 세트가 추가 되었으니, 0 = name: 'salad', price: 4
+1=name: 'wings', price: 3
+2=name: 'fries', price: 1
+같은 방식으로 저장된다.
+//
+
+--
+addDishToCourse (courseName, dishName, dishPrice)
+   const dish = {
+     name: dishName,
+     price: dishPrice,
+   };
+   return this._courses[courseName].push(dish);
+ }
+--
+
+
+//
+const appetizer = this.getRandomDishFromCourse('appetizers')로
+appetizer에 랜덤형태로 메뉴를 지정하는데, 여기서 name, price는 내가보기에
+this._courses[courseName]에서 가져와 쓸수있는것이 아닌가 추측한다.
+//
+
+--
+generateRandomMeal() {
+   const appetizer = this.getRandomDishFromCourse('appetizers');
+   const main = this.getRandomDishFromCourse('mains');
+   const dessert = this.getRandomDishFromCourse('desserts');
+   const test = this.getRandomDishFromCourse('test');
+   const totalPrice = appetizer.price + main.price + dessert.price + test.price;
+   return `Your meal is ${appetizer.name}, ${main.name}, and ${dessert.name}, and ${test.name} the total price is ${totalPrice}`;
+ }
+};
+
+
+//
+getRandomDishFromCourse(courseName)의 courseName은 밑의 getRandomMeal()로부터
+변수가 들어오고 각 변수는 this._courses[courseName]을 통해 각각 변수의 해당하는 ('appetizers', 'salad', 4.00) 방식의 값이 dishes 들어감.
+randomIndex의 숫자는 courseName 변수가 들어가면서 length가 3으로 Math.floor가 적은수를 기반으로
+하기 때문에 가장 큰 수는 2, 작은수는 0으로 랜덤으로 0,1,2가 나옴.
+dishes[randomIndex]로 숫자에 맞춰 선출.
+//
+
+--
+getRandomDishFromCourse(courseName) {
+   const dishes = this._courses[courseName];
+   const randomIndex = Math.floor(Math.random() * dishes.length);
+   return dishes[randomIndex];
+     
+ }
+--
+
+
+//
+결과값;
+//
+
+
+0
+1
+2
+0
+Your meal is salad, salmon, and cake, and sex the total price is 81.25
+1
+{ name: 'wings', price: 3 }
+{ appetizers: 
+   [ { name: 'salad', price: 4 },
+     { name: 'wings', price: 3 },
+     { name: 'fries', price: 1 } ],
+  mains: 
+   [ { name: 'steak', price: 10.25 },
+     { name: 'salmon', price: 7.75 },
+     { name: 'tofu', price: 11.2 } ],
+  desserts: 
+   [ { name: 'ice cream', price: 3 },
+     { name: 'coffee', price: 3 },
+     { name: 'cake', price: 3.25 } ],
+  test: 
+   [ { name: 'sex', price: 66.25 },
+     { name: 'tex', price: 500.25 },
+     { name: 'rex', price: 1000.25 } ] }
+[ { name: 'salad', price: 4 },
+  { name: 'wings', price: 3 },
+  { name: 'fries', price: 1 } ]
+[ { name: 'steak', price: 10.25 },
+  { name: 'salmon', price: 7.75 },
+  { name: 'tofu', price: 11.2 } ]
+[ { name: 'ice cream', price: 3 },
+  { name: 'coffee', price: 3 },
+  { name: 'cake', price: 3.25 } ]
+[ { name: 'sex', price: 66.25 },
+  { name: 'tex', price: 500.25 },
+  { name: 'rex', price: 1000.25 } ]
+[ { name: 'salad', price: 4 },
+  { name: 'wings', price: 3 },
+  { name: 'fries', price: 1 } ]
+

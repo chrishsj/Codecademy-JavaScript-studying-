@@ -1,0 +1,85 @@
+좋아하는 팀의 대한 정보를 생성하자고 하지만,
+실제 내용은 조사하려는 팀을 1인칭으로 두고 상대팀의 이름과 점수 등을 도출하는 내용.
+
+내용은 getter,push 등을 사용하여 데이터를 완성하는 것.
+
+쉬운내용이라 딱히..
+암기만해두자
+
+
+
+const team = {
+ _players: [
+{
+ firstName: 'Pablo',
+ lastName: 'Sanchez',
+ age: 11
+},
+ {
+     firstName: 'Pete',
+     lastName: 'Wheeler',
+     age: 54
+   },
+     {
+     firstName: 'SAT',
+     lastName: 'BYYYT',
+     age: 54
+   }
+]
+ ,_games: [
+   {
+ opponent: 'Broncos',
+ teamPoints: 42,
+ opponentPoints: 27
+},
+{
+ opponent: 'dffcos',
+ teamPoints: 33,
+ opponentPoints: 27
+},
+{
+ opponent: 'oooeeee',
+ teamPoints: 24,
+ opponentPoints: 55
+}
+ ]
+,
+get players() {
+ return this._players;
+},
+ 
+ 
+get games() {
+      return this._games;
+ 
+}  ,
+addPlayer(firstName, lastName, age) {
+   let player = {
+     firstName: firstName,
+     lastName: lastName,
+     age: age
+   };
+   this.players.push(player);
+ },
+ addGame(opp, myPts, oppPts) {
+   const game = {
+     opponent: opp,
+     teamPoints: myPts,
+     opponentPoints: oppPts
+   };
+   this.games.push(game);
+ }      
+}
+ 
+team.addPlayer('Steph','Curry',28);
+team.addPlayer('Lisa','Leslie',44);
+team.addPlayer('Bugs','Bunny',76);
+ 
+console.log(team.players);
+ 
+team.addGame('Titans', 100, 98);
+team.addGame('GOLIA', 69, 88);
+team.addGame('AEROS', 122, 58);
+ 
+console.log(team.games);
+

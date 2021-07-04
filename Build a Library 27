@@ -1,0 +1,112 @@
+Build a Library
+
+축하합니다. 귀하의 도움이 절실히 필요한 지역 Books-‘N-Stuff의 수석 사서가되었습니다. 그들은 여전히 색인 카드를 사용하여 콘텐츠를 정리하고 있습니다! Yikes.
+
+하지만 아무리 자바 스크립트를 알고 있으니 새로운 발굴 작업을 현대화 해 보겠습니다.
+
+Books-‘N-Stuff는 책, CD 및 영화의 세 가지 유형의 미디어를 전달합니다. 
+이 프로젝트에서는 Book, Movie 및 CD의 세 가지 하위 클래스가있는 Media라는 
+상위 클래스를 만듭니다. 
+이 세 가지 하위 클래스에는 다음과 같은 속성과 메서드가 있습니다.
+
+
+//stuff
+Book
+Properties: author (string), title (string), pages (number), isCheckedOut (boolean, initially false), and ratings (array, initially empty).
+Getters: all properties have a getter
+Methods: .getAverageRating(), .toggleCheckOutStatus(), and .addRating()
+Movie
+Properties: director (string), title (string), runTime (number), isCheckedOut (boolean, initially false), and ratings (array, initially empty)
+Getters: all properties have a getter
+Methods: .getAverageRating(), .toggleCheckOutStatus(), and .addRating()
+CD
+Properties: artist (string), title (string), isCheckedOut (boolean, initially false), and ratings (array, initially empty), songs (array of strings)
+Getters: all properties have a getter
+Methods: .getAverageRating(), .toggleCheckOutStatus(), and .addRating()
+//stuff
+
+
+
+class Media {
+ constructor(title){
+   this._title = title;
+   this._isCheckedOut = false;
+   this._ratings = [];
+ }
+ get title(){
+   return this._title;
+ }
+ get isCheckedOut(){
+   return this._isCheckedOut;
+ }
+ get ratings(){
+   return this._ratings;
+ }
+ set isCheckedOut(iCO){
+   this._isCheckedOut = iCO;
+ }
+ 
+ toggleCheckOutStatus(){
+ this._isCheckedOut = !this._isCheckedOut;
+ }
+ getAverageRating(){
+   let ratingsSum = this.ratings.reduce((accumulator, rating) => accumulator + rating);
+   return ratingsSum / this.ratings.length;
+ }
+ 
+ addRating(value){
+   this.ratings.push(value);
+ }
+  
+}
+ 
+class Book extends Media{
+ constructor(author, title, pages){
+   super(title);
+   this._author = author;
+   this._pages = pages;
+ }
+ get author(){
+   return this._author
+ }
+ get pages(){
+ 
+ }
+}
+class Movie extends Media{
+ constructor(director, title, runTime){
+   super(title);
+   this._director = director;
+   this._runTime = runTime;
+ }
+ get director(){
+   return this._director;
+ }
+ get runTime(){
+   return this._runTime;
+ }
+}
+ 
+const historyOfEverything = new Book('Bill Bryson','A Short History of Nearly Everything',544);
+ 
+historyOfEverything.toggleCheckOutStatus();
+ 
+console.log(historyOfEverything.isCheckedOut);
+historyOfEverything.addRating(4);
+historyOfEverything.addRating(5);
+historyOfEverything.addRating(5);
+ 
+console.log(historyOfEverything.getAverageRating());
+ 
+const speed = new Movie('Jan de Bont', 'Speed', 116);
+ 
+speed.toggleCheckOutStatus();
+console.log(speed.isCheckedOut);
+speed.addRating(1);
+speed.addRating(1);
+speed.addRating(5);
+ 
+console.log(speed.getAverageRating());
+ 
+ 
+
